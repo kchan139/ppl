@@ -24,11 +24,13 @@ def main(argv):
             printUsage()
         elif argv[1] == 'LexerSuite':
             from LexerSuite import LexerSuite
-            suite = unittest.makeSuite(LexerSuite)
+            loader = unittest.TestLoader()
+            suite = loader.loadTestsFromTestCase(LexerSuite)
             test(suite)
         elif argv[1] == 'ParserSuite':
             from ParserSuite import ParserSuite
-            suite = unittest.makeSuite(ParserSuite)
+            loader = unittest.TestLoader()
+            suite = loader.loadTestsFromTestCase(ParserSuite)
             test(suite)
         else:
             printUsage()
