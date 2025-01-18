@@ -1,5 +1,6 @@
 antlr-4.9.2-complete.jar
 .DS_Store
+.antlr
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
