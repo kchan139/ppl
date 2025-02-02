@@ -16,7 +16,7 @@ COPY antlr-4.9.2-complete.jar .
 ENV ANTLR_JAR=/app/antlr-4.9.2-complete.jar
 
 # Set Python path for test modules
-ENV PYTHONPATH="/app:/app/src:/app/src/test:/app/src/test/Lexer"
+ENV PYTHONPATH="/app/Assignment 1/src"
 
 # Default command (can be overridden)
 CMD ["bash"] 
