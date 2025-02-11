@@ -120,13 +120,28 @@ body
 statement
 	: ID ASSIGN expr SEMICOLON							# assign
 	| ID LPAREN expr* (COMMA expr)* RPAREN SEMICOLON	# function_method_call
-	| RETURN expr	SEMICOLON							# return
+	| RETURN expr SEMICOLON								# return
 	;
+
 expr
-	: 'expr'
+	: expr1 ADD expr 
+	| expr1
 	;
-
-
+expr1
+	: expr2 SUB expr2 
+	| expr2
+	;
+expr2
+	: expr2 (MUL | DIV) expr3 
+	| expr3
+	;
+expr3
+	: ID
+	| INT_LIT 
+	| FLOAT_LIT 
+	| LPAREN expr RPAREN 
+	| RETURN expr SEMICOLON
+	;
 
 
 INT
@@ -158,6 +173,24 @@ ASSIGN
 	;
 RETURN
 	: 'return'
+	;
+ADD
+	: '+'
+	;
+SUB
+	: '-'
+	;
+MUL
+	: '*'
+	;
+DIV 
+	: '/'
+	;
+INT_LIT
+	: [0-9]+
+	;
+FLOAT_LIT
+	: INT_LIT '.' INT_LIT
 	;
 ID
 	: [a-zA-Z]+
