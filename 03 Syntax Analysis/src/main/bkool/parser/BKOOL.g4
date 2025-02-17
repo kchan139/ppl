@@ -8,43 +8,64 @@ options{
 	language=Python3;
 }
 
+//========== PARSER RULES ==========//
 
 //====== Q1 ======//
 // program
-// 	: (vardecl | funcdecl)+ EOF
+// 	: manyDecl EOF
 // 	;	// write for program rule here using vardecl and funcdecl
-
+// manyDecl
+// 	: manyDecl varOrFuncDecl | varOrFuncDecl
+// 	;
+// varOrFuncDecl
+// 	: vardecl | funcdecl
+// 	;
 // vardecl
 // 	: 'vardecl' 
 // 	;
-
 // funcdecl
 // 	: 'funcdecl' 
 // 	;
 
 //====== Q2 ======//
 // program
-// 	: (vardecl | funcdecl)+ EOF
-// 	; // write your rule here
-
-// //And some other rules for variable declaration, function declaration and other rules
-// typedecl
-// 	: INT | FLOAT
+// 	: manyDecl EOF
+// 	;	// write for program rule here using vardecl and funcdecl
+// manyDecl
+// 	: manyDecl varOrFuncDecl | varOrFuncDecl
 // 	;
-// idlist
-// 	: ID (COMMA ID)*
-// 	;
-// paramlist
-// 	: typedecl idlist
-// 	;
-// paramdecl
-// 	: LPAREN paramlist* (SEMICOLON paramlist)* RPAREN
+// varOrFuncDecl
+// 	: vardecl | funcdecl
 // 	;
 // vardecl
-// 	: typedecl idlist SEMICOLON
+// 	: bkoolType idList SEMICOLON
+// 	;
+// bkoolType
+// 	: INT | FLOAT
+// 	;
+// idList
+// 	: ID idListTail
+// 	;
+// idListTail
+// 	: COMMA ID idListTail 
+// 	|
 // 	;
 // funcdecl
-// 	: typedecl ID paramdecl body
+// 	: bkoolType ID paramDecl body
+// 	;
+// paramDecl
+// 	: LPAREN paramList RPAREN
+// 	;
+// paramList
+// 	: param paramListTail
+// 	|
+// 	;
+// paramListTail
+// 	: SEMICOLON param paramListTail
+// 	|
+// 	;
+// param
+// 	: bkoolType idList
 // 	;
 // body
 // 	: 'body'
@@ -52,38 +73,84 @@ options{
 
 
 
-
 //====== Q3 ======//
 // program
-// 	: (vardecl | funcdecl)+ EOF
-// 	; // write your rule here
-
-// //And some other rules for variable declaration, function declaration and other rules
-// typedecl
-// 	: INT | FLOAT
+// 	: manyDecl EOF
+// 	;	// write for program rule here using vardecl and funcdecl
+// manyDecl
+// 	: manyDecl varOrFuncDecl | varOrFuncDecl
 // 	;
-// idlist
-// 	: ID (COMMA ID)*
-// 	;
-// paramlist
-// 	: typedecl idlist
-// 	;
-// paramdecl
-// 	: LPAREN paramlist* (SEMICOLON paramlist)* RPAREN
+// varOrFuncDecl
+// 	: vardecl | funcdecl
 // 	;
 // vardecl
-// 	: typedecl idlist SEMICOLON
+// 	: bkoolType idList SEMICOLON
+// 	;
+// bkoolType
+// 	: INT | FLOAT
+// 	;
+// idList
+// 	: ID idListTail
+// 	;
+// idListTail
+// 	: COMMA ID idListTail 
+// 	|
 // 	;
 // funcdecl
-// 	: typedecl ID paramdecl body
+// 	: bkoolType ID paramDecl body
+// 	;
+// paramDecl
+// 	: LPAREN paramList RPAREN
+// 	;
+// paramList
+// 	: param paramListTail
+// 	|
+// 	;
+// paramListTail
+// 	: SEMICOLON param paramListTail
+// 	|
+// 	;
+// param
+// 	: bkoolType idList
 // 	;
 // body
-// 	: LBRACK (vardecl | statement)* RBRACK
+// 	: LBRACK bodyContent RBRACK
 // 	;
-// statement
-// 	: ID ASSIGN expr SEMICOLON							# assign
-// 	| ID LPAREN expr* (COMMA expr)* RPAREN SEMICOLON	# function_method_call
-// 	| RETURN expr	SEMICOLON							# return
+// bodyContent
+// 	: manyDecl manyStmt
+// 	| manyVarDecl 
+// 	| manyStmt
+//  |
+// 	;
+// manyVarDecl
+// 	: manyVarDecl vardecl
+// 	| vardecl
+// 	;
+// manyStmt
+// 	: manyStmt stmt
+// 	| stmt
+// 	;
+// stmt
+// 	: assignStmt SEMICOLON
+// 	| callStmt SEMICOLON
+// 	| returnStmt SEMICOLON
+// 	;
+// assignStmt
+// 	: ID ASSIGN expr
+// 	;
+// callStmt
+// 	: ID LPAREN exprList RPAREN 
+// 	;
+// returnStmt
+// 	: RETURN expr
+// 	;
+// exprList
+// 	: expr exprListTail
+// 	|
+// 	;
+// exprListTail
+// 	: COMMA expr exprListTail
+// 	|
 // 	;
 // expr
 // 	: 'expr'
@@ -92,57 +159,113 @@ options{
 
 //====== Q4 ======//
 program
-	: (vardecl | funcdecl)+ EOF
-	; // write your rule here
-
-//And some other rules for variable declaration, function declaration and other rules
-typedecl
-	: INT | FLOAT
+	: manyDecl EOF
+	;	// write for program rule here using vardecl and funcdecl
+manyDecl
+	: manyDecl varOrFuncDecl | varOrFuncDecl
 	;
-idlist
-	: ID (COMMA ID)*
-	;
-paramlist
-	: typedecl idlist
-	;
-paramdecl
-	: LPAREN paramlist* (SEMICOLON paramlist)* RPAREN
+varOrFuncDecl
+	: vardecl | funcdecl
 	;
 vardecl
-	: typedecl idlist SEMICOLON
+	: bkoolType idList SEMICOLON
+	;
+bkoolType
+	: INT | FLOAT
+	;
+idList
+	: ID idListTail
+	;
+idListTail
+	: COMMA ID idListTail 
+	|
 	;
 funcdecl
-	: typedecl ID paramdecl body
+	: bkoolType ID paramDecl body
+	;
+paramDecl
+	: LPAREN paramList RPAREN
+	;
+paramList
+	: param paramListTail
+	|
+	;
+paramListTail
+	: SEMICOLON param paramListTail
+	|
+	;
+param
+	: bkoolType idList
 	;
 body
-	: LBRACK (vardecl | statement)* RBRACK
+	: LBRACK bodyContent RBRACK
 	;
-statement
-	: ID ASSIGN expr SEMICOLON							# assign
-	| ID LPAREN expr* (COMMA expr)* RPAREN SEMICOLON	# function_method_call
-	| RETURN expr SEMICOLON								# return
+bodyContent
+	: manyDecl manyStmt
+	| manyVarDecl 
+	| manyStmt
+	|
+	;
+manyVarDecl
+	: manyVarDecl vardecl
+	| vardecl
+	;
+manyStmt
+	: manyStmt stmt
+	| stmt
+	;
+stmt
+	: assignStmt SEMICOLON
+	| callStmt SEMICOLON
+	| returnStmt SEMICOLON
+	;
+assignStmt
+	: ID ASSIGN expr
+	;
+callStmt
+	: ID LPAREN exprList RPAREN 
+	;
+returnStmt
+	: RETURN expr
+	;
+exprList
+	: expr exprListTail
+	|
+	;
+exprListTail
+	: COMMA expr exprListTail
+	|
 	;
 
 expr
-	: expr1 ADD expr 
+	: expr1 ADD expr
 	| expr1
 	;
 expr1
-	: expr2 SUB expr2 
+	: expr2 SUB expr2
 	| expr2
 	;
 expr2
-	: expr2 (MUL | DIV) expr3 
+	: expr2 mulOrDiv expr3
 	| expr3
 	;
 expr3
-	: ID
-	| INT_LIT 
-	| FLOAT_LIT 
-	| LPAREN expr RPAREN 
-	| RETURN expr SEMICOLON
+	: INT_LIT 
+	| FLOAT_LIT
+	| ID
+	| callStmt
+	| subExpr
+	;
+subExpr
+	: LPAREN expr RPAREN
 	;
 
+mulOrDiv
+	: MUL | DIV
+	;
+
+
+//========== LEXER RULES ==========//
 
 INT
 	: 'int'
