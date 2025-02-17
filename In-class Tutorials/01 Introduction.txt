@@ -1,1 +1,0 @@
-Given a program that consist of 'n' lines of code, and assume that it takes 't1' sec for translating and 't2' sec for executing each line of code, what is the total time of translating and executing the program using interpreter and compiler
