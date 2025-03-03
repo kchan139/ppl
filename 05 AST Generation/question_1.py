@@ -32,7 +32,9 @@ class TerminalCount(MPVisitor):
     def visitIds(self,ctx:MPParser.IdsContext):
         return None
 """
+
 class TerminalCount(MPVisitor):
+
     def visitProgram(self,ctx:MPParser.ProgramContext):
         return 1 + self.visit(ctx.vardecls())
 
