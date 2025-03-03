@@ -43,11 +43,12 @@ class ASTGeneration(MPVisitor):
 """
 
 class ASTGeneration(MPVisitor):
+
     def visitProgram(self,ctx:MPParser.ProgramContext):
         return Program(self.visit(ctx.vardecls()))
         
     def visitVardecls(self,ctx:MPParser.VardeclsContext):
-        vardlst = [self.visit(ctx.vardecl())] + self.visit(ctx.vardecltail())
+        lst = [self.visit(ctx.vardecl())] + self.visit(ctx.vardecltail())
         return [x for y in lst for x in y]
 
     def visitVardecltail(self,ctx:MPParser.VardecltailContext): 
