@@ -24,6 +24,7 @@ class BooleanLiteral(Expr): #value:boolean
 Please copy the following class into your answer and modify the bodies of its methods to generate the AST of a MP input?
 
 class ASTGeneration(MPVisitor):
+
     def visitProgram(self,ctx:MPParser.ProgramContext):
         return None
 

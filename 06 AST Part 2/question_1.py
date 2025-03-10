@@ -14,6 +14,7 @@ ID: [a-z]+ ;
 Please copy the following class into your answer and modify the bodies of its methods to return the height of the parse tree? Your code starts at line 10.
 
 class Height(MPVisitor):
+
     def visitProgram(self,ctx:MPParser.ProgramContext):
         return None
 
