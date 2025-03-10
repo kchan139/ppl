@@ -44,3 +44,42 @@ class ASTGeneration(MPVisitor):
     def visitNum(self,ctx:MPParser.DimenContext):
         return None
 """
+
+class ASTGeneration(MPVisitor):
+
+    def visitProgram(self,ctx:MPParser.ProgramContext):
+        return self.visit(ctx.mptype())
+
+    def visitMptype(self,ctx:MPParser.MptypeContext):
+        if ctx.primtype():
+            return self.visit(ctx.primtype())
+        else:
+            return self.visit(ctx.arraytype())
+            
+    def visitArraytype(self,ctx:MPParser.ArraytypeContext):
+        idx = self.visit(ctx.dimen())
+        if ctx.primtype():
+            return ArrayType(idx,self.visit(ctx.primtype()))
+        else:
+            unionType = self.visit(ctx.arraytype())
+            return ArrayType(
+                UnionType(unionType.indexType, idx), 
+                unionType.eleType
+            )
+
+    def visitPrimtype(self,ctx:MPParser.PrimtypeContext): 
+        if ctx.INTTYPE():
+            return IntType()
+        else:
+            return FloatType()
+
+    def visitDimen(self,ctx:MPParser.DimenContext):
+        low = self.visit(ctx.num(0))
+        high = self.visit(ctx.num(1))
+        return RangeType(low, high)
+
+    def visitNum(self,ctx:MPParser.DimenContext):
+        num = int(ctx.INTLIT().getText())
+        if ctx.getChildCount() > 1:
+            return -num
+        return num
