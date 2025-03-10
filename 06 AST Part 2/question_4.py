@@ -73,12 +73,12 @@ class ASTGeneration(MPVisitor):
             return FloatType()
 
     def visitDimens(self,ctx:MPParser.DimensContext):
-        dimensions = [self.visit(dimen) for dimen in ctx.dimen()]
-        res = dimensions[0]
-        dimlen = len(dimensions)
+        dimens = [self.visit(dimen) for dimen in ctx.dimen()]
+        res = dimens[0]
+        dimlen = len(dimens)
         
         for i in range(1, dimlen):
-            res = UnionType(res, dimensions[i])
+            res = UnionType(res, dimens[i])
         
         return res
 
